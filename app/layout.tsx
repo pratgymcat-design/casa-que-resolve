@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -63,6 +64,7 @@ export default function RootLayout({
           </div>
         </header>
         <div className="flex-1">{children}</div>
+        <WhatsAppButton />
         <footer className="border-t border-[#e4ddd2] bg-white">
           <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 text-sm text-[#686159] md:flex-row md:items-center md:justify-between md:px-8 lg:px-10">
             <p>
