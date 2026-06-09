@@ -1,4 +1,15 @@
-import { ArrowUpRight, Check, ChevronRight, Clock, HelpCircle, Star, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  Check,
+  ChevronRight,
+  Clock,
+  HelpCircle,
+  ShieldCheck,
+  ShoppingCart,
+  Star,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -128,7 +139,7 @@ export default async function PostPage({
 
   return (
     <main>
-      <article className="mx-auto max-w-4xl px-5 py-10 md:px-8">
+      <article className="mx-auto max-w-5xl px-5 py-10 md:px-8">
         <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[#686159]">
           <Link href="/" className="hover:text-[#1f4f46]">
             Inicio
@@ -149,9 +160,12 @@ export default async function PostPage({
             </>
           ) : null}
         </nav>
-        <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-medium text-[#686159]">
+        <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold text-[#686159]">
           <span className="rounded-full bg-[#d7eadf] px-3 py-1 text-[#1f4f46]">
             {post.category?.name ?? "Review"}
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#f4eadb] px-3 py-1 text-[#6b4b2b]">
+            <Star size={15} fill="currentColor" /> Nota {post.score.toFixed(1)}
           </span>
           <span className="inline-flex items-center gap-1">
             <Clock size={16} /> {post.reading_time} min de leitura
@@ -161,6 +175,20 @@ export default async function PostPage({
           {post.title}
         </h1>
         <p className="mt-5 text-xl leading-8 text-[#686159]">{post.excerpt}</p>
+        <div className="mt-7 grid gap-3 text-sm font-semibold text-[#49433c] sm:grid-cols-3">
+          <span className="inline-flex items-center gap-2 rounded-lg border border-[#e4ddd2] bg-white px-4 py-3">
+            <BadgeCheck className="text-[#1f4f46]" size={18} />
+            Criterios claros
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-lg border border-[#e4ddd2] bg-white px-4 py-3">
+            <ShoppingCart className="text-[#1f4f46]" size={18} />
+            Link de compra
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-lg border border-[#e4ddd2] bg-white px-4 py-3">
+            <ShieldCheck className="text-[#1f4f46]" size={18} />
+            Transparencia
+          </span>
+        </div>
       </article>
 
       <div className="mx-auto max-w-6xl px-5 md:px-8">
@@ -176,7 +204,7 @@ export default async function PostPage({
       </div>
 
       <article className="mx-auto grid max-w-6xl gap-8 px-5 py-10 md:grid-cols-[1fr_340px] md:px-8">
-        <div className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/5 md:p-8">
+        <div className="rounded-lg border border-[#e4ddd2] bg-white p-6 shadow-sm md:p-8">
           <div className="mb-8 rounded-lg border border-[#d7eadf] bg-[#eef8f2] p-5">
             <p className="text-sm font-semibold uppercase tracking-wide text-[#1f4f46]">
               Resumo rapido
@@ -186,22 +214,38 @@ export default async function PostPage({
             </p>
           </div>
           {renderContent(post.content)}
+          <div className="mt-10 rounded-lg border border-[#e4ddd2] bg-[#fbfaf7] p-5">
+            <h2 className="text-xl font-bold text-[#1d1a16]">
+              Como decidimos a recomendacao
+            </h2>
+            <p className="mt-3 leading-7 text-[#686159]">
+              Priorizamos utilidade real, avaliacao do produto, custo-beneficio,
+              facilidade de uso, problemas comuns relatados por compradores e
+              chance de resolver uma necessidade clara dentro de casa.
+            </p>
+          </div>
         </div>
 
-        <aside className="h-fit rounded-lg border border-[#e4ddd2] bg-white p-5 shadow-sm md:sticky md:top-24">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#1f4f46]">
-                Nota CQResolve
-              </p>
-              <p className="mt-1 text-4xl font-semibold">{post.score.toFixed(1)}</p>
+        <aside className="h-fit overflow-hidden rounded-lg border border-[#d8cebf] bg-white shadow-sm md:sticky md:top-28">
+          <div className="bg-[#173d36] p-5 text-white">
+            <p className="text-xs font-bold uppercase tracking-wide text-[#a8dec3]">
+              Melhor escolha do guia
+            </p>
+            <div className="mt-3 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-white/75">
+                  Nota Casa Que Resolve
+                </p>
+                <p className="mt-1 text-4xl font-bold">{post.score.toFixed(1)}</p>
+              </div>
+              <Star className="text-[#f0c76a]" fill="currentColor" size={38} />
             </div>
-            <Star className="text-[#c8912e]" fill="currentColor" size={34} />
           </div>
 
+          <div className="p-5">
           {post.product ? (
             <>
-              <div className="mt-6 border-t border-[#eee7dc] pt-5">
+              <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-[#1f4f46]">
                   Produto recomendado
                 </p>
@@ -243,9 +287,9 @@ export default async function PostPage({
                     href={link.url}
                     target="_blank"
                     rel="nofollow sponsored noopener noreferrer"
-                    className="flex items-center justify-between gap-3 rounded-md bg-[#1f4f46] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#173d36]"
+                    className="flex items-center justify-between gap-3 rounded-md bg-[#1f8f5f] px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#19794f]"
                   >
-                    {link.label} em {link.merchant}
+                    <span>{link.label} em {link.merchant}</span>
                     <ArrowUpRight size={17} />
                   </a>
                 ))}
@@ -256,6 +300,7 @@ export default async function PostPage({
               </p>
             </>
           ) : null}
+          </div>
         </aside>
       </article>
     </main>
